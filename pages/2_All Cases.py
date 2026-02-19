@@ -1,6 +1,6 @@
 import streamlit as st
-from pages.helper import db_queries
-from pages.helper.streamlit_helpers import require_login
+from helper import db_queries
+from helper.streamlit_helpers import require_login
 
 
 def show_image(image_col, image_path):
