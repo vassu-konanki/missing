@@ -1,18 +1,41 @@
 import os
 import uuid
-from dotenv import load_dotenv
+import streamlit as st
 from supabase import create_client
 
-load_dotenv()
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+# -------------------------------------
+# GET SUPABASE CREDENTIALS
+# -------------------------------------
+def get_supabase_credentials():
+    """
+    Works both locally (.env) and on Streamlit Cloud (st.secrets)
+    """
+
+    # 1️⃣ Streamlit Cloud
+    if "SUPABASE_URL" in st.secrets and "SUPABASE_KEY" in st.secrets:
+        return st.secrets["SUPABASE_URL"], st.secrets["SUPABASE_KEY"]
+
+    # 2️⃣ Local environment (.env or system env)
+    url = os.getenv("SUPABASE_URL")
+    key = os.getenv("SUPABASE_KEY")
+
+    if url and key:
+        return url, key
+
+    raise ValueError("Supabase credentials not found.")
+
+
+SUPABASE_URL, SUPABASE_KEY = get_supabase_credentials()
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 BUCKET_NAME = "missing-person-images"
 
 
+# -------------------------------------
+# UPLOAD IMAGE FUNCTION
+# -------------------------------------
 def upload_image(file_or_bytes, original_filename=None):
     """
     Flexible upload function.
@@ -20,8 +43,9 @@ def upload_image(file_or_bytes, original_filename=None):
     1) upload_image(file_object)
     2) upload_image(file_bytes, filename)
     """
+
     try:
-        # Case 1: file object from Streamlit uploader
+        # Case 1: Streamlit file uploader object
         if original_filename is None:
             file_obj = file_or_bytes
             file_bytes = file_obj.getvalue()
@@ -32,21 +56,23 @@ def upload_image(file_or_bytes, original_filename=None):
             file_bytes = file_or_bytes
             content_type = "image/jpeg"
 
-        # Extract extension
-        file_ext = original_filename.split(".")[-1]
+        # Extract extension safely
+        file_ext = original_filename.split(".")[-1].lower()
 
-        # Unique filename
+        # Generate unique filename
         unique_filename = f"{uuid.uuid4()}.{file_ext}"
 
-        # Upload to Supabase
+        # Upload to Supabase storage
         supabase.storage.from_(BUCKET_NAME).upload(
             unique_filename,
             file_bytes,
-            {"content-type": content_type}
+            {"content-type": content_type},
         )
 
         # Get public URL
-        public_url = supabase.storage.from_(BUCKET_NAME).get_public_url(unique_filename)
+        public_url = supabase.storage.from_(BUCKET_NAME).get_public_url(
+            unique_filename
+        )
 
         return public_url
 
