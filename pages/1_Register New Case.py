@@ -2,11 +2,11 @@ import uuid
 import numpy as np
 import streamlit as st
 import json
+from helper.data_models import RegisteredCases
 
-from pages.helper.data_models import RegisteredCases
-from pages.helper import db_queries
-from pages.helper.utils import image_obj_to_numpy, extract_face_embedding
-from pages.helper.supabase_storage import upload_image
+from helper import db_queries
+from helper.utils import image_obj_to_numpy, extract_face_embedding
+from helper.supabase_storage import upload_image
 
 st.set_page_config(page_title="Register New Case")
 
