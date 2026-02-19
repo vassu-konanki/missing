@@ -1,6 +1,6 @@
 import streamlit as st
-from pages.helper import db_queries, match_algo, train_model
-from pages.helper.streamlit_helpers import require_login
+from helper import db_queries, match_algo, train_model
+from helper.streamlit_helpers import require_login
 
 
 # ---------------- IMAGE LOADER ----------------
