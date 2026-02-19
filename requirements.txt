@@ -1,19 +1,25 @@
 streamlit==1.38.0
 streamlit-authenticator==0.4.2
 st-pages==0.4.5
-
+python-dotenv
 numpy==1.24.4
 pandas==2.0.3
 scikit-learn==1.3.2
 
+# ✅ Supabase (v1 stable)
+supabase==1.0.3
+gotrue==1.0.2
+postgrest==0.10.6
+realtime==1.0.0
+storage3==0.5.3
+httpx==0.23.3
+
 opencv-python-headless==4.9.0.80
 mediapipe==0.10.9
 protobuf==3.20.3
-
 Pillow==10.2.0
 jinja2==3.1.3
 sqlmodel==0.0.16
-
 insightface==0.7.3
 onnxruntime==1.16.3
 psycopg2-binary
