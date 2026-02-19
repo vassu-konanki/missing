@@ -3,9 +3,9 @@ import base64
 import streamlit as st
 from yaml import SafeLoader
 import streamlit_authenticator as stauth
+from helper import db_queries
 
-from pages.helper import db_queries
-from pages.helper.db_queries import create_db
+from helper.db_queries import create_db
 
 # ---------------- CREATE TABLES ---------------- #
 create_db()
