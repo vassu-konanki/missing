@@ -1,6 +1,6 @@
 import streamlit as st
 from sqlmodel import SQLModel, Session, select
-from pages.helper.data_models import RegisteredCases, PublicSubmissions
+from helper.data_models import RegisteredCases, PublicSubmissions
 from db_connection import get_engine
 
 # ---------------- DATABASE CONNECTION ---------------- #
