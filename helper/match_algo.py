@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from pages.helper import db_queries
-from pages.helper.data_models import RegisteredCases
-from pages.helper.db_queries import engine
+from helper import db_queries
+from helper.data_models import RegisteredCases
+from helper.db_queries import engine
 from sqlmodel import Session, select
 
 
